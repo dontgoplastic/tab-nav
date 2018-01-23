@@ -1,7 +1,7 @@
 {
   "name": "@dontgoplastic/tab-nav",
   "version": "0.0.1",
-  "description": "An accessible tab navigation UI component",
+  "description": "An accessible tab navigation component",
   "repository": "github:dontgoplastic/tab-nav",
   "module": "dist/tab-nav.es.js",
   "main": "dist/tab-nav.js",
