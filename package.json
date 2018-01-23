@@ -1,0 +1,31 @@
+{
+  "name": "@dontgoplastic/tab-nav",
+  "version": "0.0.1",
+  "description": "An accessible tab navigation UI component",
+  "repository": "github:dontgoplastic/tab-nav",
+  "module": "dist/tab-nav.es.js",
+  "main": "dist/tab-nav.js",
+  "umd:main": "dist/tab-nav.umd.js",
+  "keywords": [
+    "a11y",
+    "accessible",
+    "accessiblity",
+    "navigation",
+    "tab"
+  ],
+  "files": [
+    "dist",
+    "src"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "microbundle": "^0.3.1"
+  },
+  "source": "src/TabNav.js",
+  "scripts": {
+    "build": "microbundle --name TabNav",
+    "dev": "microbundle watch --name TabNav"
+  },
+  "author": "Billy White <billy.white@gmail.com>",
+  "license": "MIT"
+}
