@@ -1,0 +1,86 @@
+<style>
+  body {
+    padding: 15px;
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  a {
+    color: #2196F3;
+  }
+  h1, h2 {
+    margin: 0 0 15px;
+  }
+  h3 {
+    margin: 0 0 10px;
+  }
+  .tab-nav {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    margin: 0;
+    border-bottom: 3px solid #2196F3;
+  }
+  .tab-nav > li {
+    flex: 0 0 auto;
+    padding: 15px;
+    cursor: pointer;
+  }
+  .tab-nav > li:hover, .tab-nav > li:focus {
+    background-color: #E3F2FD;
+  }
+  .tab-nav > li.active {
+    background-color: #2196F3;
+    color: #FFF;
+  }
+  [role=tabpanel] {
+    padding: 15px;
+    background-color: #E3F2FD;
+  }
+</style>
+
+<main>
+  <h1>Cool Stuff</h1>
+
+  <h2>Cool Bugs</h2>
+  <ul id="cool-bugs-list" class="tab-nav">
+    <li data-tab-content-id="beetles">Beetles</li>
+    <li data-tab-content-id="bees">Bees</li>
+    <li data-tab-content-id="earthworms">Earthworms</li>
+  </ul>
+
+  <div id="beetles" style="display: none;">
+    <h3>Beetles</h3>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum iusto reiciendis optio, est temporibus alias explicabo aut aperiam mollitia dignissimos quam eum a tempore natus placeat harum corporis nulla! Earum.</p>
+    <h4>Additional Links</h4>
+    <ul>
+      <li><a href="#">Beetle Link 1</a></li>
+      <li><a href="#">Beetle Link 2</a></li>
+    </ul>
+  </div>
+  <div id="bees" style="display: none;">
+    <h3>Bees</h3>
+    <p>Sed nobis ex minus voluptate quibusdam ducimus consequuntur, recusandae provident saepe minima ipsam amet nisi enim quas ratione dignissimos magnam placeat similique? Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+    <h4>Additional Links</h4>
+    <ul>
+      <li><a href="#">Bee Link 1</a></li>
+      <li><a href="#">Bee Link 2</a></li>
+      <li><a href="#">Bee Link 3</a></li>
+    </ul>
+  </div>
+  <div id="earthworms" style="display: none;">
+    <h3>Earthworms</h3>
+    <p>Necessitatibus aut ullam quas asperiores dignissimos Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur nostrum a deleniti cupiditate omnis expedita ipsam eum, quam consequuntur sint qui nulla reprehenderit!</p>
+    <h4>Additional Links</h4>
+    <ul>
+      <li><a href="#">Earthworm Link 1</a></li>
+      <li><a href="#">Earthworm Link 2</a></li>
+    </ul>
+  </div>
+</main>
+
+<script src="https://unpkg.com/@dontgoplastic/tab-nav/dist/tab-nav.umd.js"></script>
+
+<script>
+  new TabNav('#cool-bugs-list');
+</script>
