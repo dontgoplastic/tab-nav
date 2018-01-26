@@ -6,22 +6,31 @@ import {
   setTabIndex,
 } from './utils';
 
+const defaults = {
+  activeClass: 'active',
+  onChange: null,
+};
+
 class TabNav {
-  constructor(el, options = {}) {
-    el = getElement(el);
+  constructor(elOrSelector, options = {}) {
+    this.options = Object.assign({}, defaults, options);
+    const { activeClass } = this.options;
+
+    const el = getElement(elOrSelector);
 
     setRole(el, 'tablist');
 
     const focusGroup = new FocusGroup(el, {
-      onItemClick: this.onTabClick.bind(this)
+      activeClass,
+      onChange: this.onTabChange.bind(this),
     });
 
     this.contentsByTab = new Map();
 
-    focusGroup.getItems().forEach(tab => {
+    focusGroup.getItems().forEach((tab) => {
       const tabId = identify(tab);
       const contentId = tab.dataset.tabContentId;
-      const content = document.querySelector('#' + contentId);
+      const content = document.querySelector(`#${contentId}`);
 
       tab.setAttribute('aria-controls', contentId);
       setRole(tab, 'tab');
@@ -33,17 +42,27 @@ class TabNav {
       this.contentsByTab.set(tab, content);
     });
 
-    this.onTabClick(focusGroup.getActiveItem());
+    focusGroup.trigger();
   }
 
-  onTabClick(item) {
+  onTabChange(activeTab) {
+    const { onChange } = this.options;
+    let activeContent = null;
+
     this.contentsByTab.forEach((content, tab) => {
-      const isActive = tab === item;
+      const isActive = tab === activeTab;
+
+      if (isActive) {
+        activeContent = content;
+      }
 
       tab.setAttribute('aria-expanded', isActive);
-      content.style.display = isActive ? '' : 'none';
-    })
+      content.style.setProperty('display', isActive ? '' : 'none');
+    });
 
+    if (onChange) {
+      onChange(activeTab, activeContent);
+    }
   }
 }
 

@@ -82,7 +82,16 @@
 </main>
 
 <script src="https://unpkg.com/@dontgoplastic/tab-nav/dist/tab-nav.umd.js"></script>
+<!-- <script src="../dist/tab-nav.umd.js"></script> -->
+
 
 <script>
-  new TabNav('#cool-bugs-list');
+  new TabNav('#cool-bugs-list', {
+    onChange: function(tab, content) {
+      console.log({
+        'tab': tab,
+        'content': content
+      });
+    }
+  });
 </script>

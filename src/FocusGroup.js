@@ -1,7 +1,6 @@
 import {
   setTabIndex,
   setAriaSelected,
-  identify,
   getElement,
 } from './utils';
 
@@ -14,23 +13,21 @@ const Key = {
   DOWN: 40,
 };
 
+const defaults = {
+  activeClass: 'active',
+  onChange: null,
+};
+
 class FocusGroup {
-  constructor(el, options = {}) {
-    el = getElement(el);
+  constructor(elOrSelector, options = {}) {
+    const el = getElement(elOrSelector);
 
-    this.options = Object.assign({}, {
-      activeClass: 'active',
-      onItemClick: null,
-    }, options);
-
-    const { activeClass, onItemClick } = this.options;
-
+    this.options = Object.assign({}, defaults, options);
     this.el = el;
     this.items = Array.from(el.children);
-    const activeItem = this.items.find(item => item.classList.contains(activeClass)) || this.items[0];
 
-    this.el.addEventListener('keydown', ({target, keyCode}) => {
-      switch(keyCode) {
+    this.el.addEventListener('keydown', ({ target, keyCode }) => {
+      switch (keyCode) {
         case Key.LEFT:
         case Key.UP:
           this.focusPrevious(target);
@@ -43,23 +40,28 @@ class FocusGroup {
         case Key.SPACE_BAR:
           target.click();
           break;
+        default:
+          break;
       }
     });
 
-    this.items.forEach(item => {
-      item.addEventListener('blur', ({relatedTarget}) => {
+    this.items.forEach((item) => {
+      item.addEventListener('blur', ({ relatedTarget }) => {
         if (!this.el.contains(relatedTarget)) {
           this.updateTabIndexes();
         }
       });
-      
+
       item.addEventListener('click', () => {
         this.setActiveItem(item);
-        if (onItemClick) {
-          onItemClick(item, this);
-        }
       });
     });
+  }
+
+  trigger() {
+    const { activeClass } = this.options;
+    const findActiveByClass = item => item.classList.contains(activeClass);
+    const activeItem = this.items.find(findActiveByClass) || this.items[0];
 
     this.setActiveItem(activeItem);
   }
@@ -93,7 +95,7 @@ class FocusGroup {
   }
 
   focusItem(item) {
-    this.items.forEach(el => {
+    this.items.forEach((el) => {
       setAriaSelected(el, el === item);
       setTabIndex(el, -1);
     });
@@ -113,6 +115,11 @@ class FocusGroup {
 
     this.activeIndex = index;
     this.updateTabIndexes();
+
+    const { onChange } = this.options;
+    if (onChange) {
+      onChange(this.getActiveItem());
+    }
   }
 
   updateTabIndexes() {
@@ -127,8 +134,6 @@ class FocusGroup {
       setTabIndex(el, isActive ? 0 : -1);
     });
   }
-
 }
-
 
 export default FocusGroup;
